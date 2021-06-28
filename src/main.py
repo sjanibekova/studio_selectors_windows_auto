@@ -204,17 +204,18 @@ def main():
     # Не забудь передать backend
     pp(selector)
     same_list = UIOSelector_Get_UIOList(selector)
-    pp(same_list)
 
     if len(same_list) > 1:
         for i in range(len(same_list)):
                 if str(same_list[i].rectangle()) == last_element_rectangle:
                     iteration = i
+                    pp(same_list[i])
                     return same_list[i]
+    pp(same_list[0])
     return same_list[0]
 '''
 draw_outline(colour='green', thickness=2, fill=<MagicMock name='mock.win32defines.BS_NULL' id='140124673757368'>, rect=None)
 '''
 if __name__ == '__main__':
     main()
-    time.sleep(20)
+    time.sleep(25)
