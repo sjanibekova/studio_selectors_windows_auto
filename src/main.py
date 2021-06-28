@@ -26,7 +26,7 @@ def get_image_of_element(wrapper):
     img = image
     im_file = BytesIO()
     img.save(im_file, format="JPEG")
-    img.show()
+    # img.show()
     im_bytes = im_file.getvalue()  # im_bytes: image in binary format.
     im_b64 = base64.b64encode(im_bytes)
     return im_b64
