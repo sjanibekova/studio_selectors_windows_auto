@@ -212,10 +212,10 @@ def main():
                     pp(same_list[i])
                     return same_list[i]
     pp(same_list[0])
+    time.sleep(25)
     return same_list[0]
 '''
 draw_outline(colour='green', thickness=2, fill=<MagicMock name='mock.win32defines.BS_NULL' id='140124673757368'>, rect=None)
 '''
 if __name__ == '__main__':
     main()
-    time.sleep(25)
