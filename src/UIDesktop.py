@@ -1463,8 +1463,9 @@ def UIOSelector_FocusHighlight(inUIOSelector):
 
 ###################################################################################################
 # old name - draw_outline_new
-def UIO_Highlight(lWrapperObject, colour='green', thickness=2, fill=win32defines.BS_NULL, rect=None,
+def UIO_Highlight(lWrapperObject, colour='blue', thickness=2, fill=win32defines.BS_NULL, rect=None,
                   inFlagSetFocus=False):
+
     if lWrapperObject is not None:
         """
         Draw an outline around the window.
@@ -1478,13 +1479,13 @@ def UIO_Highlight(lWrapperObject, colour='green', thickness=2, fill=win32defines
         if inFlagSetFocus:
             # Установить фокус на объект, чтобы было видно выделение
             lWrapperObject.set_focus()
-            time.sleep(0.5)
+            # time.sleep(0.5)
         # don't draw if dialog is not visible
         # if not lWrapperObject.is_visible():
         #    return
         colours = {
             "green": 0x00ff00,
-            "blue": 0xff0000,
+            "blue":  win32api.RGB(0,206,209),
             "red": 0x0000ff,
         }
         # if it's a known colour

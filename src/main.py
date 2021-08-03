@@ -5,6 +5,9 @@ import win32api
 import pywinauto
 from ctypes.wintypes import tagPOINT
 from pprint import pprint as pp
+
+import win32gui
+from win32api import GetSystemMetrics
 from UIDesktop import UIO_Highlight, UIOEI_Convert_UIOInfo, UIOSelector_Get_UIOList, UIOSelector_Get_UIO
 import base64
 import mouse
@@ -135,6 +138,7 @@ def search_selector_run(keymap=None):
         Program search elements on window until ctrl is not pushed
         Then return full selector path of info
     """
+    wrapper_manager = []
     if keymap:
         button = keymap["mouse_button"]
         hothey = keymap["hotkey"]
@@ -151,27 +155,46 @@ def search_selector_run(keymap=None):
         # Получай элемент по координанам
         try:
             element, wrapper = get_current_element_by_coordinates()
+
             # проверка зажата ли правая кнопка мыши или ctrl
             if mouse.is_pressed(button=button) and keyboard.is_pressed(hothey):
                 result = get_element_tree_structure(element, wrapper)
 
                 final_result = reindex_elements_in_tree(result)
-
                 element_screenshot = get_image_of_element(wrapper)
                 final_result.append({"backend": "uia"})
                 final_result.append({"image_base_64_code": element_screenshot.decode('utf-8')})
                 lFlagLoop = False
-                # pp(final_result)
-                # with open('element_tree.json', 'w', ) as outfile:
-                #     json.dump(final_result, outfile, indent=2)
-
             else:
-                UIO_Highlight(wrapper)
+                # очистить холст
+                '''
+                https://stackoverflow.com/questions/7207309/how-to-run-functions-in-parallel
+                https://stackoverflow.com/questions/18864859/python-executing-multiple-functions-simultaneously
+                
+                https://stackoverflow.com/questions/37305014/python-running-n-number-of-functions-in-parallel
+                # Into class 
+                '''
+
+                time.sleep(0.3)
+                element1, wrapper1 = get_current_element_by_coordinates()
+                if wrapper1 == wrapper:
+                    UIO_Highlight(wrapper)
+                # очистить холст
+                else:
+                    clear_window_after_drawing()
         except COMError as e:
             print(e)
             continue
     pp(final_result)
     return final_result
+
+
+def clear_window_after_drawing():
+    hwnd = win32gui.WindowFromPoint((0, 0))
+    monitor = (0, 0, GetSystemMetrics(0), GetSystemMetrics(1))
+    win32gui.InvalidateRect(hwnd, monitor, True)
+
+
 
 
 def main():
@@ -204,18 +227,17 @@ def main():
     # Не забудь передать backend
     pp(selector)
     same_list = UIOSelector_Get_UIOList(selector)
+    pp(same_list)
 
     if len(same_list) > 1:
         for i in range(len(same_list)):
                 if str(same_list[i].rectangle()) == last_element_rectangle:
                     iteration = i
-                    pp(same_list[i])
                     return same_list[i]
-    pp(same_list[0])
-    time.sleep(25)
     return same_list[0]
 '''
 draw_outline(colour='green', thickness=2, fill=<MagicMock name='mock.win32defines.BS_NULL' id='140124673757368'>, rect=None)
 '''
 if __name__ == '__main__':
     main()
+    time.sleep(20)
