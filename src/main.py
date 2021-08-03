@@ -229,7 +229,7 @@ def main():
     # Не забудь передать backend
     pp(selector)
     same_list = UIOSelector_Get_UIOList(selector)
-    pp(same_list)
+    # pp(same_list)
 
     if len(same_list) > 1:
         for i in range(len(same_list)):
