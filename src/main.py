@@ -186,6 +186,8 @@ def search_selector_run(keymap=None):
             print(e)
             continue
     pp(final_result)
+    with open('selector_data.json', 'w') as f:
+        json.dump(final_result, f)
     return final_result
 
 
@@ -240,4 +242,4 @@ draw_outline(colour='green', thickness=2, fill=<MagicMock name='mock.win32define
 '''
 if __name__ == '__main__':
     main()
-    time.sleep(20)
+    # time.sleep(20)
