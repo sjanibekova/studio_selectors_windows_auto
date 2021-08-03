@@ -1,5 +1,5 @@
 altgraph==0.17
-comtypes==1.1.10py
+comtypes==1.1.10
 future==0.18.2
 importlib-metadata==4.6.3
 ipython==5.5.0
